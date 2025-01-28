@@ -12,9 +12,7 @@ A Flutter plugin for iOS, Android and Web for playing back video on a Widget sur
 
 ![The example app running in iOS](https://github.com/flutter/packages/blob/main/packages/video_player/video_player/doc/demo_ipod.gif?raw=true)
 
-## Installation
-
-First, add `video_player` as a [dependency in your pubspec.yaml file](https://flutter.dev/using-packages/).
+## Setup
 
 ### iOS
 
@@ -37,7 +35,7 @@ Android Manifest file, located in `<project root>/android/app/src/main/AndroidMa
 
 If you are using network-based videos, you will need to [add the
 `com.apple.security.network.client`
-entitlement](https://docs.flutter.dev/platform-integration/macos/building#entitlements-and-the-app-sandbox)
+entitlement](https://flutter.dev/to/macos-entitlements)
 
 ### Web
 
@@ -146,8 +144,7 @@ Furthermore, see the example app for an example playback speed implementation.
 ### Picture-in-Picture
 
 #### iOS
-If you want to enable picture-in-picture make sure to enable the `audio` capability (in Xcode's UI it will say **Audio, AirPlay, and Picture in Picture**).
-Not setting this capability but calling `setPictureInPictureOverlayRectMessage` and `setPictureInPicture` will not start the picture-in-picture.
+To enable picture-in-picture functionality, you need to add the **Background Modes** capabilities for **Audio, AirPlay, and Picture in Picture** as described in [Configuring your app for media playback > Configure the background modes](https://developer.apple.com/documentation/AVFoundation/configuring-your-app-for-media-playback#Configure-the-background-modes). Resulting in a new string entry `audio` in the array value of the entry `UIBackgroundModes` in your `Info.plist` file, which is located in `<project root>/ios/Runner/Info.plist`:
 
 ```xml
     <key>UIBackgroundModes</key>
@@ -155,6 +152,9 @@ Not setting this capability but calling `setPictureInPictureOverlayRectMessage` 
         <string>audio</string>
     </array>
 ```
+
+> [!IMPORTANT]  
+> Failing to add the `audio` **Background Modes** capability will result in a silent failure to start picture-in-picture playback.
 
 Example:
 ![The example app running in iOS with picture-in-picture enabled](https://github.com/flutter/plugins/blob/main/packages/video_player/video_player/doc/demo_pip_iphone.gif?raw=true)

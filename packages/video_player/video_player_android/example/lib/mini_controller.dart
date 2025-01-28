@@ -267,7 +267,9 @@ class MiniController extends ValueNotifier<VideoPlayerValue> {
         case VideoEventType.isPlayingStateUpdate:
           value = value.copyWith(isPlaying: event.isPlaying);
         case VideoEventType.startedPictureInPicture:
+          throw UnimplementedError();
         case VideoEventType.stoppedPictureInPicture:
+          throw UnimplementedError();
         case VideoEventType.unknown:
           break;
       }

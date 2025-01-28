@@ -3,8 +3,8 @@ description: Demonstrates how to use the video_player plugin.
 publish_to: none
 
 environment:
-  sdk: ^3.1.0
-  flutter: ">=3.13.0"
+  sdk: ^3.5.0
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
@@ -32,10 +32,7 @@ flutter:
     - assets/flutter-mark-square-64.png
     - assets/Butterfly-209.mp4
 
-
 # FOR TESTING ONLY. DO NOT MERGE.
 dependency_overrides:
-  video_player_android:
-    path: ../../../video_player/video_player_android
   video_player_platform_interface:
     path: ../../../video_player/video_player_platform_interface

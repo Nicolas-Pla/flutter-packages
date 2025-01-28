@@ -1,3 +1,17 @@
+## 2.7.2
+
+- Supports the latest `package:analyzer` and `package:source_gen`.
+- Updates minimum supported SDK version to Flutter 3.27/Dart 3.6.
+
+## 2.7.1
+
+- Fixes readme typos and uses code excerpts.
+
+## 2.7.0
+
+- Adds an example and a test with `onExit`.
+- Updates minimum supported SDK version to Flutter 3.16/Dart 3.2.
+
 ## 2.6.2
 
 * Fixes a bug in the example app when accessing `BuildContext`.

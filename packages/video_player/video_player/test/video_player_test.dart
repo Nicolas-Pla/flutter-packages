@@ -1093,6 +1093,29 @@ void main() {
           'isCompleted: false),');
     });
 
+    group('equals', () {
+      test('identical objects are equal', () {
+        const VideoPlayerValue a = VideoPlayerValue(duration: Duration.zero);
+        const VideoPlayerValue b = VideoPlayerValue(duration: Duration.zero);
+        expect(a, equals(b));
+      });
+
+      test('objects differing in isPictureInPictureActive should not be equal',
+          () {
+        const VideoPlayerValue a = VideoPlayerValue(
+          duration: Duration.zero,
+          // Ignore the default value of isPictureInPictureActive, to ensure test stability in the future.
+          // ignore: avoid_redundant_argument_values
+          isPictureInPictureActive: false,
+        );
+        const VideoPlayerValue b = VideoPlayerValue(
+          duration: Duration.zero,
+          isPictureInPictureActive: true,
+        );
+        expect(a, isNot(equals(b)));
+      });
+    });
+
     group('copyWith()', () {
       test('exact copy', () {
         const VideoPlayerValue original = VideoPlayerValue.uninitialized();
@@ -1331,6 +1354,8 @@ class FakeVideoPlayerPlatform extends VideoPlayerPlatform {
   bool forceInitError = false;
   int nextTextureId = 0;
   final Map<int, Duration> _positions = <int, Duration>{};
+  final Map<int, VideoPlayerWebOptions> webOptions =
+      <int, VideoPlayerWebOptions>{};
 
   @override
   Future<int?> create(DataSource dataSource) async {
@@ -1411,5 +1436,15 @@ class FakeVideoPlayerPlatform extends VideoPlayerPlatform {
   @override
   Widget buildView(int textureId) {
     return Texture(textureId: textureId);
+  }
+
+  @override
+  Future<void> setWebOptions(
+      int textureId, VideoPlayerWebOptions options) async {
+    if (!kIsWeb) {
+      throw UnimplementedError('setWebOptions() is only available in the web.');
+    }
+    calls.add('setWebOptions');
+    webOptions[textureId] = options;
   }
 }
