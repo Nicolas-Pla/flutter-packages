@@ -93,10 +93,24 @@
 - (void)initialize:(FlutterError *__autoreleasing *)error {
 #if TARGET_OS_IOS
   // Allow audio playback when the Ring/Silent switch is set to silent AND enable Picture-in-Picture
-  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
-                                       mode:AVAudioSessionModeMoviePlayback
-                                    options:AVAudioSessionCategoryOptionAllowPictureInPicture
-                                      error:nil];
+  NSError *sessionError = nil;
+  
+  // Set the category, mode, and crucially, the PiP option
+  BOOL success = [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                                        mode:AVAudioSessionModeMoviePlayback
+                                                     options:AVAudioSessionCategoryOptionAllowPictureInPicture
+                                                       error:&sessionError];
+
+  if (sessionError) {
+      NSLog(@"❌ Error setting AVAudioSession category for PiP: %@", sessionError.localizedDescription);
+  }
+  
+  // Also ensure the session is active when the player is initialized.
+  success = [[AVAudioSession sharedInstance] setActive:YES error:&sessionError];
+  if (sessionError) {
+      NSLog(@"❌ Error activating AVAudioSession for PiP: %@", sessionError.localizedDescription);
+  }
+
 #endif
 
   [self.playersByTextureId
