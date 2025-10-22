@@ -624,7 +624,6 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
     if (AVPictureInPictureController.isPictureInPictureSupported) {
       self.pictureInPictureController =
           [[AVPictureInPictureController alloc] initWithPlayerLayer:self.playerLayer];
-      [self setAutomaticallyStartPictureInPicture:NO];
       _pictureInPictureController.delegate = self;
     }
   } else {
