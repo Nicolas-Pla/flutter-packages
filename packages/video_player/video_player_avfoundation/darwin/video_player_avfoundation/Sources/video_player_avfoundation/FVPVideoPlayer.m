@@ -624,6 +624,8 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
     if (AVPictureInPictureController.isPictureInPictureSupported) {
       self.pictureInPictureController =
           [[AVPictureInPictureController alloc] initWithPlayerLayer:self.playerLayer];
+      // ELIMINA ESTA LÍNEA:
+      // [self setAutomaticallyStartPictureInPicture:NO];
       _pictureInPictureController.delegate = self;
     }
   } else {
@@ -633,11 +635,20 @@ NS_INLINE CGFloat radiansToDegrees(CGFloat radians) {
 
 - (void)setAutomaticallyStartPictureInPicture:
     (BOOL)canStartPictureInPictureAutomaticallyFromInline {
-  if (!self.pictureInPictureController) return;
+  NSLog(@"🎥 setAutomaticallyStartPictureInPicture called with: %d", canStartPictureInPictureAutomaticallyFromInline);
+  
+  if (!self.pictureInPictureController) {
+    NSLog(@"❌ pictureInPictureController is NULL");
+    return;
+  }
+  
 #if TARGET_OS_IOS
   if (@available(iOS 14.2, *)) {
+    NSLog(@"✅ Setting canStartPictureInPictureAutomaticallyFromInline to: %d", canStartPictureInPictureAutomaticallyFromInline);
     self.pictureInPictureController.canStartPictureInPictureAutomaticallyFromInline =
         canStartPictureInPictureAutomaticallyFromInline;
+  } else {
+    NSLog(@"❌ iOS version too old for auto PiP");
   }
 #endif
 }
