@@ -92,8 +92,11 @@
 
 - (void)initialize:(FlutterError *__autoreleasing *)error {
 #if TARGET_OS_IOS
-  // Allow audio playback when the Ring/Silent switch is set to silent
-  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+  // Allow audio playback when the Ring/Silent switch is set to silent AND enable Picture-in-Picture
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                       mode:AVAudioSessionModeMoviePlayback
+                                    options:AVAudioSessionCategoryOptionAllowPictureInPicture
+                                      error:nil];
 #endif
 
   [self.playersByTextureId
